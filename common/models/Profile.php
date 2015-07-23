@@ -72,7 +72,7 @@ class Profile extends \yii\db\ActiveRecord
     public function behaviors() {
         return [
             'timestamp' => [
-                'class' => 'yii\behaviors\TimeStampBehavior',
+                'class' => 'yii\behaviors\TimestampBehavior',
                 'attributes' => [
                     ActiveRecord::EVENT_BEFORE_INSERT => ['create_at', 'update_at'],
                     ActiveRecord::EVENT_BEFORE_UPDATE=> ['update_at'],
