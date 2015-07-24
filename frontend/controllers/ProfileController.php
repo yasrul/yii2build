@@ -102,16 +102,19 @@ class ProfileController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionUpdate()
     {
-        $model = $this->findModel($id);
+        if ($model = Profile::find()->where(['user_id' => \Yii::$app->user->identity->id])->one()) {
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view']);
+            } else {
+                return $this->render('update', [
                 'model' => $model,
-            ]);
+                ]);
+            }
+        }else {
+            throw new NotFoundHttpException('No Such Profile.');
         }
     }
 
@@ -121,11 +124,12 @@ class ProfileController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionDelete()
     {
-        $this->findModel($id)->delete();
+        $model = Profile::find()->where(['user_id' => \Yii::$app->user->identity->id])->one();
+        $this->findModel($model->id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['site/index']);
     }
 
     /**

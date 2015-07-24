@@ -2,12 +2,13 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use common\models\PermissionHelpers;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Profile */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Profiles', 'url' => ['index']];
+$this->title = $model->user->username."'s Profile";
+$this->params['breadcrumbs'][] = ['label' => 'Profile', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="profile-view">
@@ -28,12 +29,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'user_id',
+            //'id',
+            //'user_id',
+            'user.username',
             'first_name:ntext',
             'last_name:ntext',
             'birthdate',
-            'gender_id',
+            'gender.gender_name',
             'created_at',
             'updated_at',
         ],
