@@ -20,7 +20,7 @@ class ProfileController extends Controller
     {
         return [
             'access' => [
-                'class' => yii\filters\AccessControl::ClassName(),
+                'class' => \yii\filters\AccessControl::ClassName(),
                 'only' => ['index', 'view', 'create', 'update', 'delete'],
                 'rules' => [
                     [
@@ -85,7 +85,7 @@ class ProfileController extends Controller
         $model = new Profile();
         $model->user_id = \Yii::$app->user->identity->id;
         
-        if($already_exists = RecordHelper::userHas('profil')) {
+        if($already_exists = RecordHelper::userHas('profile')) {
             return $this->render('view', ['model' => $this->findModel($already_exists)]);
         } elseif ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view']);

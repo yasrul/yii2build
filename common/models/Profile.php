@@ -74,8 +74,8 @@ class Profile extends \yii\db\ActiveRecord
             'timestamp' => [
                 'class' => 'yii\behaviors\TimestampBehavior',
                 'attributes' => [
-                    ActiveRecord::EVENT_BEFORE_INSERT => ['create_at', 'update_at'],
-                    ActiveRecord::EVENT_BEFORE_UPDATE=> ['update_at'],
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE=> ['updated_at'],
                 ],
                 'value' => new Expression('Now()'),
             ]
@@ -100,15 +100,15 @@ class Profile extends \yii\db\ActiveRecord
     }
     
     public function getUser() {
-        $this->hasOne(User::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
     
     public function getUserName() {
-        return $this->user->user_name;
+        return $this->user->username;
     }
     
     public function getUserId() {
-        return $this->user ? $this->user->user_id : '-none-';
+        return $this->user ? $this->user->id : '-none-';
     }
     
     public function getUserLink() {
