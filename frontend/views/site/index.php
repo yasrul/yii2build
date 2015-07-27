@@ -22,40 +22,34 @@ $this->title = 'Yii 2 Build';
         <?php echo FacebookPlugin::widget(['type' => FacebookPlugin::LIKE, 'settings' => []]); ?>
     </div>
 
-    <div class="body-content">
-
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
-        </div>
-
-    </div>
+    <?php
+        echo Collapse::widget([
+            'items' => [
+                [
+                    'label' => 'Top Features',
+                    'content' => FacebookPlugin::widget([
+                        'type' => FacebookPlugin::SHARE,
+                        'settings' => ['href' => 'http://localhost/yii2build/frontend/web', 'width' => '350'],
+                    ]),
+                ],
+                [
+                    'label' => 'Top Resources',
+                    'content' => FacebookPlugin::widget([
+                        'type' => FacebookPlugin::SHARE,
+                        'settings' => ['href' => 'http://localhost/yii2build/frontend/web', 'width' => '350']
+                    ]),
+                ],
+            ]
+        ]);
+        
+        Modal::begin([
+            'header' => '<h2>Lates Comments</h2>',
+            'toggleButton' => ['label' => 'Comments'],
+        ]);
+        echo FacebookPlugin::widget([
+            'type' => FacebookPlugin::COMMENT,
+            'settings' => ['href' => 'http://localhost/yii2build/frontend/web', 'width' => '350']
+        ]);
+        Modal::end();
+    ?>
 </div>
