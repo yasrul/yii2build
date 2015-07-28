@@ -16,7 +16,7 @@ $this->title = 'Yii 2 Build';
             echo Html::a('Get started today', ['site/signup'], ['class' => 'btn btn-lg btn-success']);
         } ?>
         <br/>
-        <h1>Yii 2 Build</h1>
+        <h1>Yii 2 Build <i class="fa fa-plug"></i></h1>
         <p class="lead">Use This Yii 2 Template to start the project</p>
         <br/>
         <?php echo FacebookPlugin::widget(['type' => FacebookPlugin::LIKE, 'settings' => []]); ?>
