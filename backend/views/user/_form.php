@@ -16,9 +16,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => 255]) ?>
 
-    <?= $form->field($model, 'role_id')->dropDownList($model->roleList(), ['prompt' => 'Please Chose One']) ?>
+    <?= $form->field($model, 'role_id')->dropDownList($model->roleList, ['prompt' => 'Please Chose One']) ?>
 
-    <?= $form->field($model, 'status_id')->dropDownList($model->statusList(), ['prompt' => 'Please Chose One']) ?>
+    <?= $form->field($model, 'status_id')->dropDownList($model->statusList, ['prompt' => 'Please Chose One']) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
