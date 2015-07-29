@@ -94,7 +94,7 @@ class Profile extends \yii\db\ActiveRecord
         return $this->gender->gender_name;
     }
     
-    public function getGenderList() {
+    public static function getGenderList() {
         $droptions = Gender::find()->asArray()->all();
         return ArrayHelper::map($droptions, 'id', 'gender_name');
     }

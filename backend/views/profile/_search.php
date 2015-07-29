@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use common\models\Profile;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\search\ProfileSearch */
@@ -25,7 +26,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'birthdate') ?>
 
-    <?php // echo $form->field($model, 'gender_id') ?>
+    <?= $form->field($model, 'gender_id')->dropDownList(Profile::getGenderList(), ['prompt' => 'Please Chose One']) ?>
 
     <?php // echo $form->field($model, 'created_at') ?>
 

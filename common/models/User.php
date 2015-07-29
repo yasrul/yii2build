@@ -258,7 +258,7 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->role ? $this->role->role_name : '-no role-';
     }
     
-    public function getRoleList() {
+    public static function getRoleList() {
         $droptions = Role::find()->asArray()->all();
         return ArrayHelper::map($droptions, 'id', 'role_name');
     }
@@ -273,7 +273,7 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->status ? $this->status->status_name : '-no status-';
     }
     
-    public function getStatusList()
+    public static function getStatusList()
     {
         $droptions = Status::find()->asArray()->all();
         return ArrayHelper::map($droptions, 'id', 'status_name');

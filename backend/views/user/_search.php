@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use common\models\User;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\search\UserSearch */
@@ -19,17 +20,17 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'username') ?>
 
-    <?= $form->field($model, 'auth_key') ?>
+    <?= $form->field($model, 'email') ?>
 
-    <?= $form->field($model, 'password_hash') ?>
+    <?= $form->field($model, 'role_id')->dropDownList(User::getRoleList(), ['prompt' => 'Please Chose One']) ?>
 
-    <?= $form->field($model, 'password_reset_token') ?>
+    <?= $form->field($model, 'status_id')->dropDownList(User::getStatusList(), ['prompt' => 'Please Chose One']) ?>
+    
+    <?php // echo $form->field($model, 'auth_key') ?>
 
-    <?php // echo $form->field($model, 'email') ?>
+    <?php // echo $form->field($model, 'password_hash') ?>
 
-    <?php // echo $form->field($model, 'role_id') ?>
-
-    <?php // echo $form->field($model, 'status_id') ?>
+    <?php // echo $form->field($model, 'password_reset_token') ?>
 
     <?php // echo $form->field($model, 'created_at') ?>
 
