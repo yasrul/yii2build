@@ -104,10 +104,9 @@ class UserSearch extends User
         
         $this->addSearchParameter($query, 'id');
         $this->addSearchParameter($query, 'username', TRUE);
-        $this->addSearchParamater($query, 'email', TRUE);
+        $this->addSearchParameter($query, 'email', TRUE);
         $this->addSearchParameter($query, 'role_id');
         $this->addSearchParameter($query, 'status_id');
-        $this->addSearchParameter($query, 'user_type_id');
         $this->addSearchParameter($query, 'created_at');
         $this->addSearchParameter($query, 'updated_at');
         
@@ -127,7 +126,7 @@ class UserSearch extends User
         return $dataProvider;
     }
     
-    protected function addSearchParamater($query, $attribute, $partialMatch = FALSE) {
+    protected function addSearchParameter($query, $attribute, $partialMatch = FALSE) {
         if (($pos = strrpos($attribute, '.')) !== FALSE) {
             $modelAttribute = substr($attribute, $pos + 1);
         }else {
