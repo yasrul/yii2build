@@ -8,6 +8,8 @@ use common\models\search\ProfileSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
+use common\models\PermissionHelpers;
 
 /**
  * ProfileController implements the CRUD actions for Profile model.
@@ -17,6 +19,30 @@ class ProfileController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index', 'view', 'create', 'update', 'delete'],
+                'rules' => [
+                    [
+                        'actions' => ['index','create','view'],
+                        'allow' => TRUE,
+                        'roles' => ['@'],
+                        'matchCallback' => function($rule, $action) {
+                            return PermissionHelpers::requireMinimumRole('Admin') &&
+                            PermissionHelpers::requireStatus('Active');
+                        }
+                    ],
+                    [
+                        'actions' => ['update','delete'],
+                        'allow' => TRUE,
+                        'roles' => ['@'],
+                        'matchCallback'=>function($rule, $action) {
+                            return PermissionHelpers::requireMinimumRole('SuperUser') &&
+                            PermissionHelpers::requireStatus('Active') ;
+                        }
+                    ]
+                ]
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
