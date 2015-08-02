@@ -15,7 +15,9 @@ class UserSearch extends User
     public $roleName;
     public $statusName;
     public $profileId;
-    
+    public $userLink;
+
+
     /**
      * @inheritdoc
      */
@@ -23,7 +25,7 @@ class UserSearch extends User
     {
         return [
             [['id', 'role_id', 'status_id'], 'integer'],
-            [['username', 'auth_key', 'password_hash', 'password_reset_token', 'email', 'created_at', 'updated_at'], 'safe'],
+            [['username', 'email', 'created_at', 'updated_at','roleName','statusName','profileId'], 'safe'],
         ];
     }
 
@@ -103,7 +105,7 @@ class UserSearch extends User
         }
         
         $this->addSearchParameter($query, 'id');
-        $this->addSearchParameter($query, 'username', TRUE);
+        $this->addSearchParameter($query, 'user.username', TRUE);
         $this->addSearchParameter($query, 'email', TRUE);
         $this->addSearchParameter($query, 'role_id');
         $this->addSearchParameter($query, 'status_id');

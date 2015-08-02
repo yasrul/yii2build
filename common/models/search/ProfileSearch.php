@@ -22,8 +22,8 @@ class ProfileSearch extends Profile
     public function rules()
     {
         return [
-            [['id', 'user_id', 'gender_id'], 'integer'],
-            [['first_name', 'last_name', 'birthdate', 'created_at', 'updated_at'], 'safe'],
+            [['id', 'gender_id'], 'integer'],
+            [['first_name', 'last_name', 'birthdate', 'genderName', 'userId'], 'safe'],
         ];
     }
     public function attributeLabels() 
