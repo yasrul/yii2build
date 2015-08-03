@@ -14,7 +14,7 @@ class ProfileSearch extends Profile
 {
     public $genderName;
     public $gender_id;
-    public $userId;
+    public $userLink;
     
     /**
      * @inheritdoc
@@ -23,7 +23,7 @@ class ProfileSearch extends Profile
     {
         return [
             [['id', 'gender_id'], 'integer'],
-            [['first_name', 'last_name', 'birthdate', 'genderName', 'userId'], 'safe'],
+            [['first_name', 'last_name', 'birthdate', 'genderName', 'userLink'], 'safe'],
         ];
     }
     public function attributeLabels() 
@@ -52,6 +52,9 @@ class ProfileSearch extends Profile
     public function search($params)
     {
         $query = Profile::find();
+        
+        $query->joinWith(['gender'])
+                ->joinWith(['user']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -81,51 +84,26 @@ class ProfileSearch extends Profile
            ] 
         ]);
         
-        if (!($this->load($params) && $this->validate())) {
-            
-            $query->joinWith(['gender'])
-                    ->joinWith(['user']);
+        if (!($this->load($params) && $this->validate())) {            
             
             return $dataProvider;
         }
 
-        $this->addSearchParameter($query, 'id');
-        $this->addSearchParameter($query, 'first_name', true);
-        $this->addSearchParameter($query, 'last_name', TRUE);
-        $this->addSearchParameter($query, 'birthdate');
-        $this->addSearchParameter($query, 'gender_id');
-        $this->addSearchParameter($query, 'created_at');
-        $this->addSearchParameter($query, 'updated_at');
-        $this->addSearchParameter($query, 'user_id');
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'user_id' => $this->user_id,
+            'birthdate' => $this->birthdate,
+            'gender_id' => $this->gender_id,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'gender.gender_name' => $this->genderName,
+        ]);
         
-        //filter by gender_name
-        $query->joinWith(['gender' => function($q) {
-            $q->andFilterWhere(['=', 'gender.gender_name', $this->genderName]);
-        }])
-        ->joinWith(['user' => function($q) {
-            $q->andFilterWhere(['=', 'user.id', $this->user]);
-            
-        }]);
+        $query->andFilterWhere(['like', 'first_name', $this->first_name])
+                ->andFilterWhere(['like', 'last_name', $this->last_name])
+                ->andFilterWhere(['like', 'user.username', $this->userLink]);
 
         return $dataProvider;
     }
-    protected function addSearchParameter($query, $attribute, $partialMatch = FALSE) {
-        if (($pos = strrpos($attribute, '.')) !== FALSE) {
-            $modelAttribute = substr($attribute, $pos + 1);
-        } else {
-            $modelAttribute = $attribute;
-        }
-        $value = $this->$modelAttribute;
-        
-        if(trim($value)=== '') {
-            return;
-        }
-        $attribute = "profile.$attribute";
-        
-        if($partialMatch) {
-            $query->andWhere(['LIKE', $attribute, $value]);
-        } else {
-            $query->andWhere([$attribute => $value]);
-        }
-    }
+   
 }

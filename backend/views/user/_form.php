@@ -13,7 +13,7 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'username')->textInput(['maxlength' => 255]) ?>
-
+    
     <?= $form->field($model, 'email')->textInput(['maxlength' => 255]) ?>
 
     <?= $form->field($model, 'role_id')->dropDownList($model->roleList, ['prompt' => 'Please Chose One']) ?>

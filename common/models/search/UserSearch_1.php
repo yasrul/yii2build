@@ -25,7 +25,7 @@ class UserSearch extends User
     {
         return [
             [['id', 'role_id', 'status_id'], 'integer'],
-            [['userLink','username', 'email', 'created_at', 'updated_at','roleName','statusName','profileId'], 'safe'],
+            [['username', 'email', 'created_at', 'updated_at','roleName','statusName','profileId'], 'safe'],
         ];
     }
 
@@ -48,10 +48,6 @@ class UserSearch extends User
     public function search($params)
     {
         $query = User::find();
-       
-        $query->joinWith(['role'])
-                    ->joinWith(['status'])
-                    ->joinWith(['profile']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -100,26 +96,55 @@ class UserSearch extends User
 
         if (!($this->load($params) && $this->validate())) {
             // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');               
+            // $query->where('0=1');
+            $query->joinWith(['role'])
+                    ->joinWith(['status'])
+                    ->joinWith(['profile']);
+            
             return $dataProvider;
         }
         
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'role_id' => $this->role_id,
-            'status_id' => $this->status_id,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-            'role.role_name' => $this->roleName,
-            'status.status_name' => $this->statusName,
-        ]);
+        $this->addSearchParameter($query, 'id');
+        $this->addSearchParameter($query, 'user.username', TRUE);
+        $this->addSearchParameter($query, 'email', TRUE);
+        $this->addSearchParameter($query, 'role_id');
+        $this->addSearchParameter($query, 'status_id');
+        $this->addSearchParameter($query, 'created_at');
+        $this->addSearchParameter($query, 'updated_at');
         
-        $query->andFilterWhere(['like','username',  $this->username])
-                ->andFilterWhere(['like','username', $this->userLink])
-                ->andFilterWhere(['like', 'email', $this->email]);
-    
+        //Filter by Role
+        $query->joinWith(['role' => function ($q) {
+            $q->andFilterWhere(['=', 'role.role_name', $this->roleName]);
+        }])
+        //Filter by Status
+            ->joinWith(['status' => function ($q) {
+                $q->andFilterWhere(['=', 'status.status_name', $this->statusName]);
+        }])
+        //Filter by Profile
+            ->joinWith(['profile' => function($q) {
+                $q->andFilterWhere(['=', 'profile.id', $this->profileId]);
+            }]);
+       
         return $dataProvider;
     }
     
-    
+    protected function addSearchParameter($query, $attribute, $partialMatch = FALSE) {
+        if (($pos = strrpos($attribute, '.')) !== FALSE) {
+            $modelAttribute = substr($attribute, $pos + 1);
+        }else {
+            $modelAttribute = $attribute;
+        }
+        $value = $this->$modelAttribute;
+        
+        if (trim($value) === '') {
+            return;
+        }
+        
+        $attribute = "user.$attribute";
+        if ($partialMatch) {
+            $query->andWhere(['LIKE', $attribute, $value]);
+        } else {
+            $query->andWhere([$attribute => $value]);
+        }
+    }
 }
