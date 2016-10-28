@@ -12,7 +12,7 @@ return [
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
     'modules' => [],
-    'homeUrl' => '/yii2build/admin',
+    'homeUrl' => '/arsip/admin',
     'components' => [
         'user' => [
             'identityClass' => 'common\models\User',
@@ -42,7 +42,7 @@ return [
             ],
         ],
         'request' => [
-            'baseUrl' => '/yii2build/admin'
+            'baseUrl' => '/arsip/admin'
         ],
     ],
     'params' => $params,

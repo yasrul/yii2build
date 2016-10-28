@@ -32,7 +32,7 @@ FontAwesomeAsset::register($this);
             if(!Yii::$app->user->isGuest) {
                 $is_admin = PermissionHelpers::requireMinimumRole('Admin');
                 NavBar::begin([
-                    'brandLabel' => 'Yii 2 Build <i class="fa fa-plug"></i> Admin',
+                    'brandLabel' => 'e-Arsip <i class="fa fa-folder-open"></i> Admin',
                     'brandUrl' => Yii::$app->homeUrl,
                     'options' => [
                         'class' => 'navbar-inverse navbar-fixed-top',
@@ -40,7 +40,7 @@ FontAwesomeAsset::register($this);
                 ]);
             }else {
                 NavBar::begin([
-                    'brandLabel' => 'Yii 2 Build <i class="fa fa-plug"></i>',
+                    'brandLabel' => 'e-Arsip <i class="fa fa-plug"></i>',
                     'brandUrl' => Yii::$app->homeUrl,
                     'options' => [
                         'class' => 'navbar-inverse navbar-fixed-top',
@@ -83,7 +83,7 @@ FontAwesomeAsset::register($this);
 
     <footer class="footer">
         <div class="container">
-        <p class="pull-left">&copy; Yii 2 Build <?= date('Y') ?></p>
+        <p class="pull-left">&copy; e-Arsip Setda Provinsi NTB <?= date('Y') ?></p>
         <p class="pull-right"><?= Yii::powered() ?></p>
         </div>
     </footer>

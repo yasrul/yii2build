@@ -29,7 +29,7 @@ FontAwesomeAsset::register($this);
     <div class="wrap">
         <?php
             NavBar::begin([
-                'brandLabel' => 'Yii 2 Build <i class="fa fa-plug"></i>',
+                'brandLabel' => 'e-Arsip Inaktif <i class="fa fa-folder-open"></i>',
                 'brandUrl' => Yii::$app->homeUrl,
                 'options' => [
                     'class' => 'navbar-inverse navbar-fixed-top',
@@ -37,14 +37,26 @@ FontAwesomeAsset::register($this);
             ]);
             $menuItems = [
                 ['label' => 'Home', 'url' => ['/site/index']],
-                ['label' => 'About', 'url' => ['/site/about']],
-                ['label' => 'Contact', 'url' => ['/site/contact']],
             ];
             if (Yii::$app->user->isGuest) {
+                $menuItems[] = ['label' => 'About', 'url' => ['/site/about']];
                 $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
                 $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
             } else {
-                $menuItems[] = ['label' => 'Profil', 'url' => ['/profile/view']];
+                $menuItems[] = ['label' => 'Referensi', 'items' => [
+                    ['label' => 'Pola Klasifikasi', 'url' => ['/pola-klasifikasi/index']],
+                    ['label' => 'Unit Pengolah', 'url' => ['/unit-pengolah/index']],
+                //    ['label' => 'Jenis Media', 'url' => ['/jenis-media/index']],
+                    ['label' => 'Lokasi Ruang', 'url' => ['/lok-ruang/index']],
+                    ['label' => 'Lokasi Rak/Rol', 'url' => ['/lok-rak-rol/index']],
+                ]];
+                $menuItems[] = ['label' => 'Arsip', 'items' => [
+                    ['label' => 'Registrasi', 'url' => ['/arsip-inaktif/create']],
+                    ['label' => 'Pencarian', 'url' => ['/arsip-inaktif/cari']],
+                    ['label' => 'Kelola', 'url' => ['/arsip-inaktif/index']]
+                ]];
+                $menuItems[] = ['label' => 'Laporan', 'url' => ['/arsip-inaktif/laporan']];
+                $menuItems[] = ['label' => 'User Profil', 'url' => ['/profile/view']];
                 $menuItems[] = [
                     'label' => 'Logout (' . Yii::$app->user->identity->username . ')',
                     'url' => ['/site/logout'],
@@ -69,8 +81,7 @@ FontAwesomeAsset::register($this);
 
     <footer class="footer">
         <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
-        <p class="pull-right"><?= Yii::powered() ?></p>
+        <p class="pull-left">&copy; Sub Bagian Arsip dan Ekspedisi Biro Umum <?= date('Y') ?></p>
         </div>
     </footer>
 

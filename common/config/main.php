@@ -3,6 +3,14 @@ return [
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'extensions' => require(__DIR__.'/../../vendor/yiisoft/extensions.php'),
     'modules' => [
+	'gridview' => [
+            'class' => '\kartik\grid\Module'
+            // enter optional module parameters below - only if you need to  
+            // use your own export download action or custom translation 
+            // message source
+            // 'downloadAction' => 'gridview/export/download',
+            // 'i18n' => []
+	],
         'social' => [
             'class' => 'kartik\social\Module',
             // the global settings for the disqus widget

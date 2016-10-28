@@ -4,7 +4,7 @@
 use yii\helpers\Html;
 use common\models\PermissionHelpers;
 
-$this->title = 'Admin Yii 2 Build';
+$this->title = 'Admin e-Arsip Inaktif';
 $is_admin = PermissionHelpers::requireMinimumRole('Admin');
 
 ?>
@@ -14,13 +14,6 @@ $is_admin = PermissionHelpers::requireMinimumRole('Admin');
         <h1>Welcome to Admin !</h1>
 
         <p class="lead">Now you can manage users, roles, and more with our easy tools.</p>
-        <p>
-        <?php
-            if(!yii::$app->user->isGuest && $is_admin) {
-                echo Html::a('Manage Users', ['user/index'], ['class' => 'btn btn-lg btn-success']);
-            }
-        ?>
-        </p>
         
     </div>
     
